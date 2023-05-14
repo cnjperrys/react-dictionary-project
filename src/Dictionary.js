@@ -3,17 +3,20 @@ import Results from "./Results";
 import axios from "axios";
 import "./Dictionary.css";
 
-export default function Dictionary() {
-    let [keyword, setKeyword] = useState("");
+export default function Dictionary(props) {
+    let [keyword, setKeyword] = useState(props.defaultKeyword);
     let [results, setResults] = useState(null);
+    let [loaded, setLoaded] = useState(false);
 
     function handleResponse(response) {
       setResults(response.data);
     }
 
-   function search(event){
+   function search(event) {
     event.preventDefault();
-    let apiUrl=`https://api.shecodes.io/dictionary/v1/define?word=${keyword}&key=c922be1463d4549f3f9otcacf2b890af`;
+   
+    let key=`c922be1463d4549f3f9otcacf2b890af`
+    let apiUrl=`https://api.shecodes.io/dictionary/v1/define?word=${keyword}&key=${key}`;
     axios.get(apiUrl).then(handleResponse);
    }
 
@@ -21,7 +24,12 @@ export default function Dictionary() {
    function handleKeywordChange(event){
     setKeyword(event.target.value);
    }
-   
+
+   function load(){
+    setLoaded(true);
+    search();
+   }
+   if (loaded) {
     return (
     <div className="Dictionary">
         <h1><strong>Dictionary</strong></h1>
@@ -31,13 +39,21 @@ export default function Dictionary() {
              placeholder="Search for a word"
              className="Search-input"
              onChange={handleKeywordChange}
-              />
-        </form>         
+             defaultValue={props.defaultKeyword}
+             />
+           </form>  
+           <br />       
         <div className="resultInfo">
-           <Results results={results}/> 
+           <Results results={results} /> 
         </div>
- </div>
+ </div>   
     );
-}
+   } else {
+    load();
+    return "Loading";
+
+   }
+   }
+
 
 

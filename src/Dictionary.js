@@ -12,10 +12,8 @@ export default function Dictionary(props) {
       setResults(response.data);
     }
 
-   function search(event) {
-    event.preventDefault();
-   
-    let key=`c922be1463d4549f3f9otcacf2b890af`
+   function search() {
+    let key=`c922be1463d4549f3f9otcacf2b890af`;
     let apiUrl=`https://api.shecodes.io/dictionary/v1/define?word=${keyword}&key=${key}`;
     axios.get(apiUrl).then(handleResponse);
    }

@@ -1,4 +1,4 @@
-import logo from './logo-cjp.png';
+
 import './App.css';
 import Dictionary from "./Dictionary";
 
@@ -7,13 +7,13 @@ function App() {
     <div className="App">
       <div className="container">
       <header className="App-header">
-        <img src={logo} className="App-logo img-fluid" alt="cjp logo" />   
-      </header>
-      <main className="Dictionaary">
-      <Dictionary  defautlKeyword="coffee" />
+         <main className="Dictionaary">
+      <Dictionary  defautlKeyword="hello" />
       </main>
+      </header>
+     
       <footer className="App-footer">
-       <small>Coded by Courtney Perry</small> 
+       <small>Coded by Courtney J Perry and open-sourced on<a href="https://github.com/cnjperrys/react-dictionary-project">Github</a></small> 
       </footer>
       </div>
     </div>

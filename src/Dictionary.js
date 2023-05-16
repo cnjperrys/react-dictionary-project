@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Dictionary.css";
 
 export default function Dictionary(props) {
-    let [keyword, setKeyword] = useState(props.defaultKeyword);
+    let [newWord, setNewWord] = useState(props.defaultKeyword);
     let [results, setResults] = useState(null);
     let [loaded, setLoaded] = useState(false);
 
@@ -12,15 +12,19 @@ export default function Dictionary(props) {
       setResults(response.data);
     }
 
-   function search() {
-    let key=`c922be1463d4549f3f9otcacf2b890af`;
-    let apiUrl=`https://api.shecodes.io/dictionary/v1/define?word=${keyword}&key=${key}`;
+   function search(keyword) {
+    let key="c922be1463d4549f3f9otcacf2b890af";
+    let apiUrl=`https://api.shecodes.io/dictionary/v1/define?word=${newWord}&key=${key}`;
     axios.get(apiUrl).then(handleResponse);
    }
 
+   function handleSubmit(event) {
+      event.preventDefault();
+      search();
+   }
    
    function handleKeywordChange(event){
-    setKeyword(event.target.value);
+    setNewWord(event.target.value);
    }
 
    function load(){
@@ -30,21 +34,23 @@ export default function Dictionary(props) {
    if (loaded) {
     return (
     <div className="Dictionary">
-        <h1><strong>Dictionary</strong></h1>
-        <form onSubmit={search}>
+        <h1>What would you like to search for?</h1>
+        <section>
+         <h2><strong>Dictionary</strong></h2>
+        <form onSubmit={handleSubmit}>
             <input
              type="search"
-             placeholder="Search for a word"
-             className="Search-input"
+             autoFocus={true}
              onChange={handleKeywordChange}
-             defaultValue={props.defaultKeyword}
-             />
-           </form>  
-           <br />       
-        <div className="resultInfo">
+             defaultValue={props.defaultKeyword}/>
+           </form> 
+           <div className="hint">
+            suggested words: tech, women, developer, SheCodes.io....
+            </div>   
+        </section>
            <Results results={results} /> 
+          
         </div>
- </div>   
     );
    } else {
     load();
